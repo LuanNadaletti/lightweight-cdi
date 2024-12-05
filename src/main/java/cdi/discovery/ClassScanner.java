@@ -1,72 +1,72 @@
 package cdi.discovery;
 
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.lang.annotation.Annotation;
-import java.lang.reflect.Field;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
-
 import cdi.inject.Inject;
 import cdi.inject.Injectable;
 
+import java.io.File;
+import java.lang.annotation.Annotation;
+import java.lang.reflect.Field;
+import java.net.URL;
+import java.util.*;
+import java.util.stream.Collectors;
+
 public class ClassScanner {
 
-    private static List<Class<?>> BEAN_ANNOTATIONS = Arrays.asList(Injectable.class);
-    private static List<Class<?>> DEPENDENCY_ANNOTATIONS = Arrays.asList(Inject.class);
-
-
+    private static final List<Class<? extends Annotation>> BEAN_ANNOTATIONS = Arrays.asList(Injectable.class);
+    private static final List<Class<? extends Annotation>> DEPENDENCY_ANNOTATIONS = Arrays.asList(Inject.class);
 
     public List<Class<?>> scanBeanAnnotatedClasses(String packageName) {
         return scan(packageName).stream()
-                .filter(clazz -> isClassContainsBeanAnnotation(clazz))
+                .filter(this::containsAnnotationFromList)
                 .collect(Collectors.toList());
     }
 
     public List<Class<?>> scanClassesWithDependencies(String packageName) {
         return scan(packageName).stream()
-                .filter(clazz -> isClassContainsDependencyAnnotation(clazz))
+                .filter(this::containsDependencyAnnotation)
                 .collect(Collectors.toList());
     }
 
-    private static Set<Class<?>> scan(String packageName) {
-        InputStream stream = ClassLoader.getSystemClassLoader()
-                .getResourceAsStream(packageName.replaceAll("[.]", "/"));
-        BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
+    private Set<Class<?>> scan(String packageName) {
+        Set<Class<?>> classes = new HashSet<>();
+        String path = packageName.replace('.', '/');
+        URL resource = ClassLoader.getSystemClassLoader().getResource(path);
 
-        return reader.lines()
-                .filter(line -> line.endsWith(".class"))
-                .map(line -> getClass(line, packageName))
-                .collect(Collectors.toSet());
-    }
-
-
-    private static Class<?> getClass(String className, String packageName) {
-        try {
-            return Class.forName(packageName + "." + className.substring(0, className.lastIndexOf('.')));
-        } catch (ClassNotFoundException e) {
-            System.out.println("Class " + className + " not founded: ");
-            e.printStackTrace();
+        if (resource == null) {
+            throw new RuntimeException("Package not found: " + packageName);
         }
-        return null;
-    }
 
-    @SuppressWarnings("unchecked")
-    private static boolean isClassContainsBeanAnnotation(Class<?> clazz) {
-        for (Class<?> annotationClass : BEAN_ANNOTATIONS) {
-            if (clazz.isAnnotationPresent((Class<? extends Annotation>) annotationClass)) return true;
+        File directory = new File(resource.getFile());
+        if (directory.exists()) {
+            findClasses(directory, packageName, classes);
         }
-        return false;
+
+        return classes;
     }
 
-    @SuppressWarnings("unchecked")
-    private static boolean isClassContainsDependencyAnnotation(Class<?> clazz) {
-        for (Class<?> annotationClass : DEPENDENCY_ANNOTATIONS) {
-            for (Field field : clazz.getFields()) {
-                if (field.isAnnotationPresent((Class<? extends Annotation>) annotationClass)) return true;
+    private void findClasses(File directory, String packageName, Set<Class<?>> classes) {
+        for (File file : Objects.requireNonNull(directory.listFiles())) {
+            if (file.isDirectory()) {
+                findClasses(file, packageName + "." + file.getName(), classes);
+            } else if (file.getName().endsWith(".class")) {
+                String className = packageName + '.' + file.getName().substring(0, file.getName().lastIndexOf('.'));
+                try {
+                    classes.add(Class.forName(className));
+                } catch (ClassNotFoundException e) {
+                    System.err.println("Class not found: " + className);
+                }
+            }
+        }
+    }
+
+    private boolean containsAnnotationFromList(Class<?> clazz) {
+        return BEAN_ANNOTATIONS.stream().anyMatch(clazz::isAnnotationPresent);
+    }
+
+    private boolean containsDependencyAnnotation(Class<?> clazz) {
+        for (Field field : clazz.getDeclaredFields()) { // Inclui campos privados
+            if (DEPENDENCY_ANNOTATIONS.stream().anyMatch(field::isAnnotationPresent)) {
+                return true;
             }
         }
         return false;
