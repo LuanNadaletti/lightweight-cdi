@@ -1,13 +1,13 @@
-package cdi.discovery;
-
-import cdi.core.BeanDefinition;
-import cdi.core.FieldDependency;
-import cdi.inject.Inject;
-import cdi.lifecycle.Scope;
-import cdi.lifecycle.Singleton;
+package com.nadaletti.impl.discovery;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
+
+import com.nadaletti.impl.core.BeanDefinition;
+import com.nadaletti.impl.core.FieldDependency;
+import com.nadaletti.impl.inject.Inject;
+import com.nadaletti.impl.lifecycle.Scope;
+import com.nadaletti.impl.lifecycle.Singleton;
 
 public class AnnotationProcessor {
 

@@ -1,9 +1,9 @@
-package cdi.core;
-
-import cdi.discovery.AnnotationProcessor;
-import cdi.discovery.ClassScanner;
+package com.nadaletti.impl.core;
 
 import java.util.List;
+
+import com.nadaletti.impl.discovery.AnnotationProcessor;
+import com.nadaletti.impl.discovery.ClassScanner;
 
 public class BeanContainer {
     private static final BeanRegistry registry = new BeanRegistry();

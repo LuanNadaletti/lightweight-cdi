@@ -1,4 +1,4 @@
-package cdi.lifecycle;
+package com.nadaletti.impl.lifecycle;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

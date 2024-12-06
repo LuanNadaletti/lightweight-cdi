@@ -1,4 +1,4 @@
-package cdi.core;
+package com.nadaletti.impl.core;
 
 import java.lang.reflect.Field;
 

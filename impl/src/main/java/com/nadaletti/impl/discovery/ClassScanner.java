@@ -1,7 +1,4 @@
-package cdi.discovery;
-
-import cdi.inject.Inject;
-import cdi.inject.Injectable;
+package com.nadaletti.impl.discovery;
 
 import java.io.File;
 import java.lang.annotation.Annotation;
@@ -9,6 +6,9 @@ import java.lang.reflect.Field;
 import java.net.URL;
 import java.util.*;
 import java.util.stream.Collectors;
+
+import com.nadaletti.impl.inject.Inject;
+import com.nadaletti.impl.inject.Injectable;
 
 public class ClassScanner {
 

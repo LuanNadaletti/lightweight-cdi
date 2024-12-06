@@ -1,11 +1,11 @@
-package cdi.core;
-
-import cdi.lifecycle.Scope;
+package com.nadaletti.impl.core;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Map;
+
+import com.nadaletti.impl.lifecycle.Scope;
 
 public class BeanRegistry {
 

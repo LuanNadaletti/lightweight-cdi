@@ -1,4 +1,4 @@
-package cdi.lifecycle;
+package com.nadaletti.impl.lifecycle;
 
 public enum Scope {
     SINGLETON,

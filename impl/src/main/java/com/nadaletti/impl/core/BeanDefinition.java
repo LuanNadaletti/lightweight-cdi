@@ -1,10 +1,10 @@
-package cdi.core;
-
-import cdi.lifecycle.Scope;
+package com.nadaletti.impl.core;
 
 import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 import java.util.List;
+
+import com.nadaletti.impl.lifecycle.Scope;
 
 public class BeanDefinition {
 
