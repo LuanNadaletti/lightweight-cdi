@@ -1,22 +1,24 @@
 package test;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import com.nadaletti.impl.core.BeanContainer;
-import com.nadaletti.impl.inject.Bean;
-import com.nadaletti.impl.inject.Inject;
-import com.nadaletti.impl.lifecycle.Singleton;
 
-@Bean
-@Singleton
+import test.container.TestContainer;
+
 public class BeanInjectionTest {
 
-    @Inject
-    BeanToInject beanToInject;
+    private TestContainer testContainer;
+
+    @Before
+    public void setup() {
+        BeanContainer.initialize("test.container");
+        testContainer = BeanContainer.getBean(TestContainer.class);
+    }
 
     @Test
-    public void testBeanInjection() {
-        BeanContainer.initialize("");
-        beanToInject.getClass();
+    public void testFieldInjection() {
+        testContainer.testBeanToInjectInjection();
     }
 }

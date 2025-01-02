@@ -22,7 +22,8 @@ public class BeanContainer {
         registry.initialize();
     }
 
-    public static Object getBean(Class<?> clazz) {
-        return registry.getBean(clazz);
+    @SuppressWarnings("unchecked")
+    public static <T> T getBean(Class<T> clazz) {
+        return (T) registry.getBean(clazz);
     }
 }

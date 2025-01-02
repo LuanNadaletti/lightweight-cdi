@@ -1,10 +1,10 @@
-package test;
+package test.container;
 
-import com.nadaletti.impl.inject.Bean;
+import com.nadaletti.impl.inject.Injectable;
 import com.nadaletti.impl.lifecycle.Singleton;
 
 @Singleton
-@Bean
+@Injectable
 public class BeanToInject {
 
 }
