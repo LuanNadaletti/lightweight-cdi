@@ -3,7 +3,7 @@ package test;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.nadaletti.impl.core.BeanContainer;
+import com.nadaletti.impl.container.BeanContainer;
 
 import test.container.TestContainer;
 

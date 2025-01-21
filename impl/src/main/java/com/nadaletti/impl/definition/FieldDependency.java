@@ -1,4 +1,4 @@
-package com.nadaletti.impl.core;
+package com.nadaletti.impl.definition;
 
 import java.lang.reflect.Field;
 

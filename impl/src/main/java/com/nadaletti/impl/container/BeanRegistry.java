@@ -1,14 +1,16 @@
-package com.nadaletti.impl.core;
+package com.nadaletti.impl.container;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.nadaletti.impl.definition.BeanDefinition;
+import com.nadaletti.impl.definition.FieldDependency;
+import com.nadaletti.impl.definition.Scope;
 import com.nadaletti.impl.exception.BeanCreationException;
 import com.nadaletti.impl.exception.BeanDefinitionNotFoundException;
 import com.nadaletti.impl.lifecycle.Initializable;
-import com.nadaletti.impl.lifecycle.Scope;
 
 public class BeanRegistry {
 

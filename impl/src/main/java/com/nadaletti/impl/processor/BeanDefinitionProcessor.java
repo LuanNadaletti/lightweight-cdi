@@ -1,15 +1,15 @@
-package com.nadaletti.impl.discovery;
+package com.nadaletti.impl.processor;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 
-import com.nadaletti.impl.core.BeanDefinition;
-import com.nadaletti.impl.core.FieldDependency;
+import com.nadaletti.impl.definition.BeanDefinition;
+import com.nadaletti.impl.definition.FieldDependency;
+import com.nadaletti.impl.definition.Scope;
 import com.nadaletti.impl.inject.Inject;
-import com.nadaletti.impl.lifecycle.Scope;
 import com.nadaletti.impl.lifecycle.Singleton;
 
-public class AnnotationProcessor {
+public class BeanDefinitionProcessor {
 
     public BeanDefinition process(Class<?> clazz) {
         BeanDefinition definition = new BeanDefinition(clazz);

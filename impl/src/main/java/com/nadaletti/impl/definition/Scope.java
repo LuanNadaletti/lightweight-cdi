@@ -1,4 +1,4 @@
-package com.nadaletti.impl.lifecycle;
+package com.nadaletti.impl.definition;
 
 public enum Scope {
     SINGLETON,

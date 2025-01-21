@@ -1,10 +1,11 @@
-package com.nadaletti.impl.core;
+package com.nadaletti.impl.container;
 
 import java.util.List;
 
-import com.nadaletti.impl.discovery.AnnotationProcessor;
+import com.nadaletti.impl.definition.BeanDefinition;
 import com.nadaletti.impl.discovery.ClassScanner;
 import com.nadaletti.impl.exception.BeanException;
+import com.nadaletti.impl.processor.BeanDefinitionProcessor;
 
 public class BeanContainer {
 
@@ -12,7 +13,7 @@ public class BeanContainer {
 
     public static void initialize(String basePackage) {
         ClassScanner scanner = new ClassScanner();
-        AnnotationProcessor processor = new AnnotationProcessor();
+        BeanDefinitionProcessor processor = new BeanDefinitionProcessor();
 
         List<Class<?>> beanClasses = scanner.scanBeanAnnotatedClasses(basePackage);
         for (Class<?> clazz : beanClasses) {

@@ -1,10 +1,8 @@
-package com.nadaletti.impl.core;
+package com.nadaletti.impl.definition;
 
 import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 import java.util.List;
-
-import com.nadaletti.impl.lifecycle.Scope;
 
 public class BeanDefinition {
 

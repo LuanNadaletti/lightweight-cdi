@@ -1,4 +1,4 @@
-package com.nadaletti.impl.core;
+package com.nadaletti.impl.container;
 
 public class DependencyInjector {
 
