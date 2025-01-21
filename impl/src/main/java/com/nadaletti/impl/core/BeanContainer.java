@@ -4,8 +4,10 @@ import java.util.List;
 
 import com.nadaletti.impl.discovery.AnnotationProcessor;
 import com.nadaletti.impl.discovery.ClassScanner;
+import com.nadaletti.impl.exception.BeanException;
 
 public class BeanContainer {
+
     private static final BeanRegistry registry = new BeanRegistry();
 
     public static void initialize(String basePackage) {
@@ -23,7 +25,7 @@ public class BeanContainer {
     }
 
     @SuppressWarnings("unchecked")
-    public static <T> T getBean(Class<T> clazz) {
+    public static <T> T getBean(Class<T> clazz) throws BeanException {
         return (T) registry.getBean(clazz);
     }
 }

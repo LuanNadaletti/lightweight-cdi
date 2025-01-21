@@ -3,6 +3,7 @@ package com.nadaletti.impl.core;
 import java.lang.reflect.Field;
 
 public class FieldDependency {
+
     private final Field field;
     private final Class<?> type;
 

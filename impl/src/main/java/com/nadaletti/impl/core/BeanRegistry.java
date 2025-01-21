@@ -5,22 +5,21 @@ import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.nadaletti.impl.exception.BeanCreationException;
+import com.nadaletti.impl.exception.BeanDefinitionNotFoundException;
+import com.nadaletti.impl.lifecycle.Initializable;
 import com.nadaletti.impl.lifecycle.Scope;
 
 public class BeanRegistry {
 
-    private final Map<Class<?>, Object> singletonBeans = new HashMap<>();
     private final Map<Class<?>, BeanDefinition> beanDefinitions = new HashMap<>();
+    private final Map<Class<?>, Object> singletonBeans = new HashMap<>();
+    private final Map<Class<?>, Object> earlySingletonObjects = new HashMap<>();
 
     public void initialize() {
         for (BeanDefinition definition : beanDefinitions.values()) {
             if (definition.getScope() == Scope.SINGLETON) {
-                try {
-                    Object bean = createBean(definition);
-                    singletonBeans.put(definition.getBeanClass(), bean);
-                } catch (Exception e) {
-                    throw new RuntimeException("Failed to initialize bean: " + definition.getBeanClass().getName(), e);
-                }
+                getBean(definition.getBeanClass());
             }
         }
     }
@@ -34,41 +33,47 @@ public class BeanRegistry {
             return singletonBeans.get(clazz);
         }
 
-        if (beanDefinitions.containsKey(clazz)) {
-            try {
-                return createBean(beanDefinitions.get(clazz));
-            } catch (Exception e) {
-                throw new RuntimeException("Failed to create bean: " + clazz.getName(), e);
-            }
+        if (earlySingletonObjects.containsKey(clazz)) {
+            return earlySingletonObjects.get(clazz);
         }
 
-        throw new RuntimeException("No bean definition found for class: " + clazz.getName());
+        if (beanDefinitions.containsKey(clazz)) {
+            return createBean(beanDefinitions.get(clazz));
+        }
+
+        throw new BeanDefinitionNotFoundException("No bean definition found for class: " + clazz.getName());
     }
 
     private Object createBean(BeanDefinition definition) {
+        Class<?> beanClass = definition.getBeanClass();
+
         try {
-            Object bean = createInstance(definition);
-            injectFieldDependencies(bean, definition);
+            Object partialInstance = createEmptyInstance(beanClass);
+            earlySingletonObjects.put(beanClass, partialInstance);
 
-            return bean;
+            injectFieldDependencies(partialInstance, definition);
+
+            if (partialInstance instanceof Initializable) {
+                ((Initializable) partialInstance).afterPropertiesSet();
+            }
+
+            singletonBeans.put(beanClass, partialInstance);
+            earlySingletonObjects.remove(beanClass);
+
+            return partialInstance;
         } catch (Exception e) {
-            throw new RuntimeException("Failed to create bean: " + definition.getBeanClass().getName(), e);
+            earlySingletonObjects.remove(beanClass);
+            throw new BeanCreationException("Failed to create bean: " + beanClass.getName());
         }
     }
 
-    private Object createInstance(BeanDefinition definition) throws Exception {
-        Constructor<?> constructor = definition.getConstructor();
-        Class<?>[] dependencies = definition.getConstructorDependencies();
-
-        Object[] resolvedDependencies = new Object[dependencies.length];
-        for (int i = 0; i < dependencies.length; i++) {
-            resolvedDependencies[i] = getBean(dependencies[i]);
-        }
-
-        return constructor.newInstance(resolvedDependencies);
+    private Object createEmptyInstance(Class<?> beanClass) throws Exception {
+        Constructor<?> constructor = beanClass.getDeclaredConstructor();
+        constructor.setAccessible(true);
+        return constructor.newInstance();
     }
 
-    private void injectFieldDependencies(Object bean, BeanDefinition definition) throws IllegalAccessException {
+    private void injectFieldDependencies(Object bean, BeanDefinition definition) throws Exception {
         for (FieldDependency fieldDependency : definition.getFieldDependencies()) {
             Field field = fieldDependency.getField();
             field.setAccessible(true);
