@@ -1,0 +1,33 @@
+package test.container;
+
+import java.awt.Dimension;
+
+import javax.swing.JFrame;
+
+import com.nadaletti.impl.container.BeanContainer;
+import com.nadaletti.impl.inject.Injectable;
+import com.nadaletti.impl.lifecycle.Initializable;
+import com.nadaletti.impl.lifecycle.Singleton;
+
+@Singleton
+@Injectable
+public class GUIProvider implements Initializable {
+
+    private JFrame defaultFrame;
+
+    /**
+     * Provides a default configured JFrame
+     *
+     * @return a JFrame
+     */
+    public JFrame defaultFrame() {
+        return defaultFrame;
+    }
+
+    public void afterPropertiesSet() {
+        defaultFrame = new JFrame();
+        defaultFrame.setSize(new Dimension(600, 300));
+        defaultFrame.setTitle(BeanContainer.getConfigValue("appName", String.class));
+        defaultFrame.setDefaultCloseOperation(1);
+    }
+}

@@ -80,6 +80,8 @@ public class BeanRegistry {
             Field field = fieldDependency.getField();
             field.setAccessible(true);
             field.set(bean, getBean(fieldDependency.getType()));
+
+            System.out.println("Injected " + fieldDependency.getType().getSimpleName() + " field dependency at: " + definition.getBeanClass().getSimpleName());
         }
     }
 }

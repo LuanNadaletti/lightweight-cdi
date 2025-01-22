@@ -19,9 +19,15 @@ public class ClassScanner {
     private static final List<Class<? extends Annotation>> BEAN_ANNOTATIONS = Arrays.asList(Injectable.class);
     private static final List<Class<? extends Annotation>> DEPENDENCY_ANNOTATIONS = Arrays.asList(Inject.class);
 
+    public List<Class<?>> scanAnnotatedClasses(String packageName, Class<? extends Annotation> annotation) {
+        return scan(packageName).stream()
+                .filter(clazz -> clazz.isAnnotationPresent(annotation))
+                .collect(Collectors.toList());
+    }
+
     public List<Class<?>> scanBeanAnnotatedClasses(String packageName) {
         return scan(packageName).stream()
-                .filter(this::containsAnnotationFromList)
+                .filter(this::containsBeanAnnotation)
                 .collect(Collectors.toList());
     }
 
@@ -63,7 +69,7 @@ public class ClassScanner {
         }
     }
 
-    private boolean containsAnnotationFromList(Class<?> clazz) {
+    private boolean containsBeanAnnotation(Class<?> clazz) {
         return BEAN_ANNOTATIONS.stream().anyMatch(clazz::isAnnotationPresent);
     }
 

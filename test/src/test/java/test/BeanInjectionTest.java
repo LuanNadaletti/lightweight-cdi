@@ -5,6 +5,7 @@ import org.junit.Test;
 
 import com.nadaletti.impl.container.BeanContainer;
 
+import test.container.CdiTest;
 import test.container.TestContainer;
 
 public class BeanInjectionTest {
@@ -20,6 +21,7 @@ public class BeanInjectionTest {
     @Test
     public void testBeanInjection() {
         System.out.println(testContainer.getBeanToInject().getValue());
+        CdiTest.startApplication();
     }
 
 }

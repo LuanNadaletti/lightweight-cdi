@@ -16,7 +16,6 @@ public class BeanToInject implements Initializable {
 
     @Override
     public void afterPropertiesSet() {
-        System.out.println("BeanToInject initializable bean after properties set");
     }
 
     public String getValue() {
