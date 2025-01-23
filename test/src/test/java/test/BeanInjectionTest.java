@@ -5,6 +5,7 @@ import org.junit.Test;
 
 import com.nadaletti.impl.container.ApplicationContainer;
 
+import test.container.BeanToInject2;
 import test.container.CdiTest;
 import test.container.TestContainer;
 

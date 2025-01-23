@@ -9,13 +9,5 @@ import com.nadaletti.impl.definition.Scope;
 
 public class ScopeProcessor {
 
-    private static final Map<Class<? extends Annotation>, Scope> scopeMapping = Map.of(Singleton.class, Scope.SINGLETON);
 
-    public static void processScope(Class<?> clazz, ComponentDefinition definition) {
-        scopeMapping.forEach((annotation, scope) -> {
-            if (clazz.isAnnotationPresent(annotation)) {
-                definition.setScope(scope);
-            }
-        });
-    }
 }

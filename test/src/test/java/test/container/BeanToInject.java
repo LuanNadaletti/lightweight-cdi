@@ -20,6 +20,7 @@ public class BeanToInject implements Initializable, Bean {
 
     @Override
     public void doBeanStuf() {
+        System.out.println("1");
     }
 
     public String getValue() {

@@ -7,7 +7,7 @@ public class ComponentDefinitionProcessor {
     public ComponentDefinition process(Class<?> clazz) {
         ComponentDefinition definition = new ComponentDefinition(clazz);
 
-        ScopeProcessor.processScope(clazz, definition);
+        definition.setMetadata(ComponentMetadataProcessor.processMetadata(clazz));
         ConstructorProcessor.processConstructor(clazz, definition);
         FieldProcessor.processFields(clazz, definition);
 

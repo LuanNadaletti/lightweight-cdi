@@ -27,7 +27,6 @@ public class ConstructorProcessor {
                 definition.setConstructor(defaultConstructor);
                 definition.setConstructorDependencies(new Class<?>[0]);
             } catch (NoSuchMethodException e) {
-                throw new RuntimeException("No suitable constructor found for class: " + clazz.getName(), e);
             }
         }
     }

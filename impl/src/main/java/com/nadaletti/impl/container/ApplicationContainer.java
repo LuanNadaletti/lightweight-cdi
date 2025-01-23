@@ -10,7 +10,7 @@ import com.nadaletti.impl.processor.ConfigurationProcessor;
 public class ApplicationContainer {
 
     private static final ComponentRegistry componentRegistry = new ComponentRegistry();
-    private static ConfigurationRegistry configurationRegistry = ConfigurationRegistry.getInstance();
+    private static final ConfigurationRegistry configurationRegistry = ConfigurationRegistry.getInstance();
 
     public static void initialize(String basePackage) {
         ConfigurationProcessor.processConfigurations(basePackage);

@@ -1,7 +1,7 @@
 package test.container;
 
-import com.nadaletti.impl.annotation.Inject;
 import com.nadaletti.impl.annotation.Component;
+import com.nadaletti.impl.annotation.Inject;
 import com.nadaletti.impl.annotation.Singleton;
 import com.nadaletti.impl.lifecycle.Initializable;
 
@@ -9,11 +9,16 @@ import com.nadaletti.impl.lifecycle.Initializable;
 @Singleton
 public class TestContainer implements Initializable {
 
-    @Inject
     private Bean beanToInject;
+
+    @Inject
+    public TestContainer(Bean beanToInject) {
+        this.beanToInject = beanToInject;
+    }
 
     @Override
     public void afterPropertiesSet() {
+        beanToInject.doBeanStuf();
     }
 
     public Bean getBeanToInject() {

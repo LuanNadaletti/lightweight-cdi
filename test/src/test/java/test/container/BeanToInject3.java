@@ -3,7 +3,9 @@ package test.container;
 import com.nadaletti.impl.annotation.Component;
 
 @Component
-public interface Bean {
+public class BeanToInject3 {
 
-    public void doBeanStuf();
+    void foo() {
+        System.out.println("3");
+    }
 }

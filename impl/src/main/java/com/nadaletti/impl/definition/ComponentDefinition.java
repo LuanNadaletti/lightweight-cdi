@@ -7,26 +7,21 @@ import java.util.List;
 public class ComponentDefinition {
 
     private final Class<?> componentClass;
-    private Scope scope;
     private Constructor<?> constructor;
     private Class<?>[] constructorDependencies;
     private List<FieldDependency> fieldDependencies = new ArrayList<>();
-    private String qualifier;
+    private ComponentMetadataDefinition metadata;
 
     public ComponentDefinition(Class<?> componentClass) {
         this.componentClass = componentClass;
     }
 
+    public boolean hasConstructor() {
+        return constructor != null;
+    }
+
     public Class<?> getComponentClass() {
         return componentClass;
-    }
-
-    public Scope getScope() {
-        return scope;
-    }
-
-    public void setScope(Scope scope) {
-        this.scope = scope;
     }
 
     public Constructor<?> getConstructor() {
@@ -53,12 +48,11 @@ public class ComponentDefinition {
         this.fieldDependencies.add(dependency);
     }
 
-    public String getQualifier() {
-        return qualifier;
+    public ComponentMetadataDefinition getMetadata() {
+        return metadata;
     }
 
-    public void setQualifier(String qualifier) {
-        this.qualifier = qualifier;
+    public void setMetadata(ComponentMetadataDefinition metadata) {
+        this.metadata = metadata;
     }
-
 }
