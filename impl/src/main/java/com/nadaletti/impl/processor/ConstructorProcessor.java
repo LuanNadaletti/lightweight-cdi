@@ -3,11 +3,11 @@ package com.nadaletti.impl.processor;
 import java.lang.reflect.Constructor;
 
 import com.nadaletti.impl.annotation.Inject;
-import com.nadaletti.impl.definition.BeanDefinition;
+import com.nadaletti.impl.definition.ComponentDefinition;
 
 public class ConstructorProcessor {
 
-    public static void processConstructor(Class<?> clazz, BeanDefinition definition) {
+    public static void processConstructor(Class<?> clazz, ComponentDefinition definition) {
         Constructor<?>[] constructors = clazz.getDeclaredConstructors();
         Constructor<?> injectConstructor = null;
 

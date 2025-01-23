@@ -3,7 +3,7 @@ package test;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.nadaletti.impl.container.BeanContainer;
+import com.nadaletti.impl.container.ApplicationContainer;
 
 import test.container.CdiTest;
 import test.container.TestContainer;
@@ -14,8 +14,8 @@ public class BeanInjectionTest {
 
     @Before
     public void setup() {
-        BeanContainer.initialize("test.container");
-        testContainer = BeanContainer.getBean(TestContainer.class);
+        ApplicationContainer.initialize("test.container");
+        testContainer = ApplicationContainer.getComponent(TestContainer.class);
     }
 
     @Test

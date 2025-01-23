@@ -4,12 +4,12 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 
 import com.nadaletti.impl.annotation.Inject;
-import com.nadaletti.impl.definition.BeanDefinition;
+import com.nadaletti.impl.definition.ComponentDefinition;
 import com.nadaletti.impl.definition.FieldDependency;
 
 public class FieldProcessor {
 
-    public static void processFields(Class<?> clazz, BeanDefinition definition) {
+    public static void processFields(Class<?> clazz, ComponentDefinition definition) {
         Field[] fields = clazz.getDeclaredFields();
 
         for (Field field : fields) {

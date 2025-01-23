@@ -16,7 +16,7 @@ import com.nadaletti.impl.annotation.Component;
 
 public class ClassScanner {
 
-    private static final List<Class<? extends Annotation>> BEAN_ANNOTATIONS = Arrays.asList(Component.class);
+    private static final List<Class<? extends Annotation>> COMPONENT_ANNOTATIONS = Arrays.asList(Component.class);
     private static final List<Class<? extends Annotation>> DEPENDENCY_ANNOTATIONS = Arrays.asList(Inject.class);
 
     public List<Class<?>> scanAnnotatedClasses(String packageName, Class<? extends Annotation> annotation) {
@@ -25,9 +25,9 @@ public class ClassScanner {
                 .collect(Collectors.toList());
     }
 
-    public List<Class<?>> scanBeanAnnotatedClasses(String packageName) {
+    public List<Class<?>> scanComponentAnnotatedClasses(String packageName) {
         return scan(packageName).stream()
-                .filter(this::containsBeanAnnotation)
+                .filter(this::containsComponentAnnotation)
                 .collect(Collectors.toList());
     }
 
@@ -69,8 +69,8 @@ public class ClassScanner {
         }
     }
 
-    private boolean containsBeanAnnotation(Class<?> clazz) {
-        return BEAN_ANNOTATIONS.stream().anyMatch(clazz::isAnnotationPresent);
+    private boolean containsComponentAnnotation(Class<?> clazz) {
+        return COMPONENT_ANNOTATIONS.stream().anyMatch(clazz::isAnnotationPresent);
     }
 
     private boolean containsDependencyAnnotation(Class<?> clazz) {

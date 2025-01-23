@@ -4,21 +4,21 @@ import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BeanDefinition {
+public class ComponentDefinition {
 
-    private final Class<?> beanClass;
+    private final Class<?> componentClass;
     private Scope scope;
     private Constructor<?> constructor;
     private Class<?>[] constructorDependencies;
     private List<FieldDependency> fieldDependencies = new ArrayList<>();
     private String qualifier;
 
-    public BeanDefinition(Class<?> beanClass) {
-        this.beanClass = beanClass;
+    public ComponentDefinition(Class<?> componentClass) {
+        this.componentClass = componentClass;
     }
 
-    public Class<?> getBeanClass() {
-        return beanClass;
+    public Class<?> getComponentClass() {
+        return componentClass;
     }
 
     public Scope getScope() {

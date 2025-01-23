@@ -1,10 +1,10 @@
 package test.container;
 
-import com.nadaletti.impl.container.BeanContainer;
+import com.nadaletti.impl.container.ApplicationContainer;
 
 public class CdiTest {
 
     public static void startApplication() {
-        BeanContainer.initialize("test.container");
+        ApplicationContainer.initialize("test.container");
     }
 }

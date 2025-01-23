@@ -1,11 +1,11 @@
 package com.nadaletti.impl.processor;
 
-import com.nadaletti.impl.definition.BeanDefinition;
+import com.nadaletti.impl.definition.ComponentDefinition;
 
-public class BeanDefinitionProcessor {
+public class ComponentDefinitionProcessor {
 
-    public BeanDefinition process(Class<?> clazz) {
-        BeanDefinition definition = new BeanDefinition(clazz);
+    public ComponentDefinition process(Class<?> clazz) {
+        ComponentDefinition definition = new ComponentDefinition(clazz);
 
         ScopeProcessor.processScope(clazz, definition);
         ConstructorProcessor.processConstructor(clazz, definition);
