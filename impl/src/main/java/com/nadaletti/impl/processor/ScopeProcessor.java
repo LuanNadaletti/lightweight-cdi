@@ -3,9 +3,9 @@ package com.nadaletti.impl.processor;
 import java.lang.annotation.Annotation;
 import java.util.Map;
 
+import com.nadaletti.impl.annotation.Singleton;
 import com.nadaletti.impl.definition.BeanDefinition;
 import com.nadaletti.impl.definition.Scope;
-import com.nadaletti.impl.lifecycle.Singleton;
 
 public class ScopeProcessor {
 

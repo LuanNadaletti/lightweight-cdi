@@ -3,9 +3,9 @@ package com.nadaletti.impl.processor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 
+import com.nadaletti.impl.annotation.Inject;
 import com.nadaletti.impl.definition.BeanDefinition;
 import com.nadaletti.impl.definition.FieldDependency;
-import com.nadaletti.impl.inject.Inject;
 
 public class FieldProcessor {
 

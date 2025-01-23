@@ -2,8 +2,8 @@ package com.nadaletti.impl.processor;
 
 import java.lang.reflect.Constructor;
 
+import com.nadaletti.impl.annotation.Inject;
 import com.nadaletti.impl.definition.BeanDefinition;
-import com.nadaletti.impl.inject.Inject;
 
 public class ConstructorProcessor {
 

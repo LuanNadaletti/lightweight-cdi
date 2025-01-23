@@ -11,12 +11,12 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import com.nadaletti.impl.inject.Inject;
-import com.nadaletti.impl.inject.Injectable;
+import com.nadaletti.impl.annotation.Inject;
+import com.nadaletti.impl.annotation.Component;
 
 public class ClassScanner {
 
-    private static final List<Class<? extends Annotation>> BEAN_ANNOTATIONS = Arrays.asList(Injectable.class);
+    private static final List<Class<? extends Annotation>> BEAN_ANNOTATIONS = Arrays.asList(Component.class);
     private static final List<Class<? extends Annotation>> DEPENDENCY_ANNOTATIONS = Arrays.asList(Inject.class);
 
     public List<Class<?>> scanAnnotatedClasses(String packageName, Class<? extends Annotation> annotation) {

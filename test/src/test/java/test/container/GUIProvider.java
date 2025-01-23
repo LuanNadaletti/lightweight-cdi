@@ -4,13 +4,13 @@ import java.awt.Dimension;
 
 import javax.swing.JFrame;
 
+import com.nadaletti.impl.annotation.Component;
+import com.nadaletti.impl.annotation.Singleton;
 import com.nadaletti.impl.container.BeanContainer;
-import com.nadaletti.impl.inject.Injectable;
 import com.nadaletti.impl.lifecycle.Initializable;
-import com.nadaletti.impl.lifecycle.Singleton;
 
 @Singleton
-@Injectable
+@Component
 public class GUIProvider implements Initializable {
 
     private JFrame defaultFrame;

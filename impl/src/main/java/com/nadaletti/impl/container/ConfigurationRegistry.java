@@ -1,4 +1,4 @@
-package com.nadaletti.impl.configuration;
+package com.nadaletti.impl.container;
 
 import java.util.HashMap;
 import java.util.Map;

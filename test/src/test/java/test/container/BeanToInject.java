@@ -1,13 +1,13 @@
 package test.container;
 
-import com.nadaletti.impl.inject.Inject;
-import com.nadaletti.impl.inject.Injectable;
+import com.nadaletti.impl.annotation.Inject;
+import com.nadaletti.impl.annotation.Component;
+import com.nadaletti.impl.annotation.Singleton;
 import com.nadaletti.impl.lifecycle.Initializable;
-import com.nadaletti.impl.lifecycle.Singleton;
 
 @Singleton
-@Injectable
-public class BeanToInject implements Initializable {
+@Component
+public class BeanToInject implements Initializable, Bean {
 
     @Inject
     private TestContainer container;
@@ -16,6 +16,10 @@ public class BeanToInject implements Initializable {
 
     @Override
     public void afterPropertiesSet() {
+    }
+
+    @Override
+    public void doBeanStuf() {
     }
 
     public String getValue() {

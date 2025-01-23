@@ -20,7 +20,7 @@ public class BeanInjectionTest {
 
     @Test
     public void testBeanInjection() {
-        System.out.println(testContainer.getBeanToInject().getValue());
+        System.out.println(testContainer.getBeanToInject());
         CdiTest.startApplication();
     }
 

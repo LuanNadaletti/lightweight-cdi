@@ -5,9 +5,9 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.List;
 
-import com.nadaletti.impl.configuration.ConfigProperty;
-import com.nadaletti.impl.configuration.Configuration;
-import com.nadaletti.impl.configuration.ConfigurationRegistry;
+import com.nadaletti.impl.annotation.ConfigProperty;
+import com.nadaletti.impl.annotation.Configuration;
+import com.nadaletti.impl.container.ConfigurationRegistry;
 import com.nadaletti.impl.discovery.ClassScanner;
 
 public class ConfigurationProcessor {

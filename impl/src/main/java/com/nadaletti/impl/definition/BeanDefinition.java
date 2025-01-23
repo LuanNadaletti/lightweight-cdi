@@ -11,6 +11,7 @@ public class BeanDefinition {
     private Constructor<?> constructor;
     private Class<?>[] constructorDependencies;
     private List<FieldDependency> fieldDependencies = new ArrayList<>();
+    private String qualifier;
 
     public BeanDefinition(Class<?> beanClass) {
         this.beanClass = beanClass;
@@ -51,4 +52,13 @@ public class BeanDefinition {
     public void addFieldDependency(FieldDependency dependency) {
         this.fieldDependencies.add(dependency);
     }
+
+    public String getQualifier() {
+        return qualifier;
+    }
+
+    public void setQualifier(String qualifier) {
+        this.qualifier = qualifier;
+    }
+
 }

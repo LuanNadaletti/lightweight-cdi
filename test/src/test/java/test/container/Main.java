@@ -2,10 +2,10 @@ package test.container;
 
 import javax.swing.JFrame;
 
+import com.nadaletti.impl.annotation.Component;
 import com.nadaletti.impl.container.BeanContainer;
-import com.nadaletti.impl.inject.Injectable;
 
-@Injectable
+@Component
 public class Main {
 
     public static void main(String[] args) {

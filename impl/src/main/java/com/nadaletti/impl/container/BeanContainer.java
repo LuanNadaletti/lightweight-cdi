@@ -2,7 +2,6 @@ package com.nadaletti.impl.container;
 
 import java.util.List;
 
-import com.nadaletti.impl.configuration.ConfigurationRegistry;
 import com.nadaletti.impl.discovery.ClassScanner;
 import com.nadaletti.impl.exception.BeanException;
 import com.nadaletti.impl.processor.BeanDefinitionProcessor;
@@ -27,12 +26,15 @@ public class BeanContainer {
         registry.initialize();
     }
 
-    @SuppressWarnings("unchecked")
     public static <T> T getBean(Class<T> clazz) throws BeanException {
-        return (T) registry.getBean(clazz);
+        return clazz.cast(registry.getBean(clazz));
     }
 
     public static <T> T getConfigValue(String key, Class<T> type) {
         return configurationRegistry.get(key, type);
+    }
+
+    public static Object getConfigValue(String key) {
+        return configurationRegistry.get(key);
     }
 }

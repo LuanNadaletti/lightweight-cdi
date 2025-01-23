@@ -1,7 +1,7 @@
 package test.container;
 
-import com.nadaletti.impl.configuration.ConfigProperty;
-import com.nadaletti.impl.configuration.Configuration;
+import com.nadaletti.impl.annotation.ConfigProperty;
+import com.nadaletti.impl.annotation.Configuration;
 
 @Configuration
 public class ConfigurationClass {

@@ -1,4 +1,4 @@
-package com.nadaletti.impl.lifecycle;
+package com.nadaletti.impl.annotation;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

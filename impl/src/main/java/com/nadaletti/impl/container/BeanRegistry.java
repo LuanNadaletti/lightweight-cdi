@@ -65,7 +65,7 @@ public class BeanRegistry {
             return partialInstance;
         } catch (Exception e) {
             earlySingletonObjects.remove(beanClass);
-            throw new BeanCreationException("Failed to create bean: " + beanClass.getName());
+            throw new BeanCreationException("Failed to create bean: " + beanClass.getName() + "\n " + e.getMessage());
         }
     }
 
