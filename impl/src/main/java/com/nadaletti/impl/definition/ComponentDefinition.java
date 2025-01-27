@@ -1,14 +1,12 @@
 package com.nadaletti.impl.definition;
 
-import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 import java.util.List;
 
 public class ComponentDefinition {
 
     private final Class<?> componentClass;
-    private Constructor<?> constructor;
-    private Class<?>[] constructorDependencies;
+    private ConstructorDependency constructorDependency;
     private List<FieldDependency> fieldDependencies = new ArrayList<>();
     private ComponentMetadataDefinition metadata;
 
@@ -17,35 +15,31 @@ public class ComponentDefinition {
     }
 
     public boolean hasConstructor() {
-        return constructor != null;
+        return constructorDependency != null;
+    }
+
+    public void addFieldDependency(FieldDependency dependency) {
+        this.fieldDependencies.add(dependency);
     }
 
     public Class<?> getComponentClass() {
         return componentClass;
     }
 
-    public Constructor<?> getConstructor() {
-        return constructor;
+    public ConstructorDependency getConstructorDependency() {
+        return constructorDependency;
     }
 
-    public void setConstructor(Constructor<?> constructor) {
-        this.constructor = constructor;
-    }
-
-    public Class<?>[] getConstructorDependencies() {
-        return constructorDependencies;
-    }
-
-    public void setConstructorDependencies(Class<?>[] constructorDependencies) {
-        this.constructorDependencies = constructorDependencies;
+    public void setConstructorDependency(ConstructorDependency constructorDependency) {
+        this.constructorDependency = constructorDependency;
     }
 
     public List<FieldDependency> getFieldDependencies() {
         return fieldDependencies;
     }
 
-    public void addFieldDependency(FieldDependency dependency) {
-        this.fieldDependencies.add(dependency);
+    public void setFieldDependencies(List<FieldDependency> fieldDependencies) {
+        this.fieldDependencies = fieldDependencies;
     }
 
     public ComponentMetadataDefinition getMetadata() {

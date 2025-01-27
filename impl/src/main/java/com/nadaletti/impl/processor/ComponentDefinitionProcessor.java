@@ -4,12 +4,12 @@ import com.nadaletti.impl.definition.ComponentDefinition;
 
 public class ComponentDefinitionProcessor {
 
-    public ComponentDefinition process(Class<?> clazz) {
+    public static ComponentDefinition process(Class<?> clazz) {
         ComponentDefinition definition = new ComponentDefinition(clazz);
 
-        definition.setMetadata(ComponentMetadataProcessor.processMetadata(clazz));
-        ConstructorProcessor.processConstructor(clazz, definition);
-        FieldProcessor.processFields(clazz, definition);
+        definition.setMetadata(ComponentMetadataProcessor.process(clazz));
+        definition.setConstructorDependency(ConstructorProcessor.process(clazz));
+        definition.setFieldDependencies(FieldProcessor.process(clazz));
 
         return definition;
     }

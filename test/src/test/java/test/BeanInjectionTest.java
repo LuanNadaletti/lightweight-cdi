@@ -22,7 +22,7 @@ public class BeanInjectionTest {
     @Test
     public void testBeanInjection() {
         System.out.println(testContainer.getBeanToInject());
-        CdiTest.startApplication();
+        ((BeanToInject2) testContainer.getBeanToInject()).call3();;
     }
 
 }

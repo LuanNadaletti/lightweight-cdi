@@ -11,7 +11,7 @@ public class ComponentMetadataProcessor {
 
     private static final Map<Class<? extends Annotation>, Scope> scopeMapping = Map.of(Singleton.class, Scope.SINGLETON);
 
-    public static ComponentMetadataDefinition processMetadata(Class<?> component) {
+    public static ComponentMetadataDefinition process(Class<?> component) {
         ComponentMetadataDefinition metadata = new ComponentMetadataDefinition();
 
         processScope(component, metadata);

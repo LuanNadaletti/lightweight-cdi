@@ -3,31 +3,35 @@ package com.nadaletti.impl.processor;
 import java.lang.reflect.Constructor;
 
 import com.nadaletti.impl.annotation.Inject;
-import com.nadaletti.impl.definition.ComponentDefinition;
+import com.nadaletti.impl.definition.ConstructorDependency;
 
 public class ConstructorProcessor {
 
-    public static void processConstructor(Class<?> clazz, ComponentDefinition definition) {
-        Constructor<?>[] constructors = clazz.getDeclaredConstructors();
-        Constructor<?> injectConstructor = null;
-
-        for (Constructor<?> constructor : constructors) {
-            if (constructor.isAnnotationPresent(Inject.class)) {
-                injectConstructor = constructor;
-                break;
-            }
+    public static ConstructorDependency process(Class<?> clazz) {
+        if (clazz.isInterface()) {
+            return null;
         }
+
+        Constructor<?> injectConstructor = findInjectConstructor(clazz);
 
         if (injectConstructor != null) {
-            definition.setConstructor(injectConstructor);
-            definition.setConstructorDependencies(injectConstructor.getParameterTypes());
-        } else {
-            try {
-                Constructor<?> defaultConstructor = clazz.getDeclaredConstructor();
-                definition.setConstructor(defaultConstructor);
-                definition.setConstructorDependencies(new Class<?>[0]);
-            } catch (NoSuchMethodException e) {
+            return new ConstructorDependency(injectConstructor, injectConstructor.getParameterTypes());
+        }
+
+        try {
+            Constructor<?> defaultConstructor = clazz.getDeclaredConstructor();
+            return new ConstructorDependency(defaultConstructor, new Class<?>[0]);
+        } catch (NoSuchMethodException e) {
+            return null;
+        }
+    }
+
+    private static Constructor<?> findInjectConstructor(Class<?> clazz) {
+        for (Constructor<?> constructor : clazz.getDeclaredConstructors()) {
+            if (constructor.isAnnotationPresent(Inject.class)) {
+                return constructor;
             }
         }
+        return null;
     }
 }

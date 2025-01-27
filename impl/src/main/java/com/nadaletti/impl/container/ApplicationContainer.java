@@ -16,11 +16,10 @@ public class ApplicationContainer {
         ConfigurationProcessor.processConfigurations(basePackage);
 
         ClassScanner scanner = new ClassScanner();
-        ComponentDefinitionProcessor processor = new ComponentDefinitionProcessor();
 
         List<Class<?>> componentClasses = scanner.scanComponentAnnotatedClasses(basePackage);
         for (Class<?> clazz : componentClasses) {
-            componentRegistry.register(processor.process(clazz));
+            componentRegistry.register(ComponentDefinitionProcessor.process(clazz));
         }
 
         componentRegistry.initialize();

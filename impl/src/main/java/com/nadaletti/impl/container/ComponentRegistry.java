@@ -16,6 +16,7 @@ import com.nadaletti.impl.lifecycle.Initializable;
 
 public class ComponentRegistry {
 
+    private final Map<ComponentDefinition, List<ComponentDefinition>> candidatesDefinitions = new HashMap<>();
     private final Map<Class<?>, ComponentDefinition> componentDefinitions = new HashMap<>();
     private final Map<Class<?>, Object> singletonComponents = new HashMap<>();
     private final Map<Class<?>, Object> earlySingletonComponents = new HashMap<>();
@@ -32,7 +33,15 @@ public class ComponentRegistry {
         componentDefinitions.put(definition.getComponentClass(), definition);
     }
 
+    public void registerCandidate(ComponentDefinition definition) {
+    }
+
     public Object getComponent(Class<?> clazz) {
+        ComponentDefinition candidate = findCandidateComponent(clazz);
+        if (candidate != null) {
+            return createComponent(candidate);
+        }
+
         if (singletonComponents.containsKey(clazz)) {
             return singletonComponents.get(clazz);
         }
@@ -43,11 +52,6 @@ public class ComponentRegistry {
 
         if (componentDefinitions.containsKey(clazz)) {
             return createComponent(componentDefinitions.get(clazz));
-        }
-
-        ComponentDefinition candidate = findCandidateComponent(clazz);
-        if (candidate != null) {
-            return createComponent(candidate);
         }
 
         throw new ComponentDefinitionNotFoundException("No component definition found for class: " + clazz.getName());
@@ -78,22 +82,22 @@ public class ComponentRegistry {
     }
 
     private Object instantiateComponent(ComponentDefinition definition) throws Exception {
-        if (definition.getConstructor() != null) {
-            int parametersNumber = definition.getConstructorDependencies().length;
+        if (definition.getConstructorDependency().getConstructor() != null) {
+            int parametersNumber = definition.getConstructorDependency().getConstructorDependencies().length;
             Object[] initialParametersInstances = new Object[parametersNumber];
 
             for (int i = 0; i < parametersNumber; i++) {
-                Object parameterInstance = getComponent(definition.getConstructorDependencies()[i]);
+                Object parameterInstance = getComponent(definition.getConstructorDependency().getConstructorDependencies()[i]);
                 initialParametersInstances[i] = parameterInstance;
                 earlySingletonComponents.put(parameterInstance.getClass(), parameterInstance);
             }
 
-            Constructor<?> constructor = definition.getConstructor();
+            Constructor<?> constructor = definition.getConstructorDependency().getConstructor();
             constructor.setAccessible(true);
             return constructor.newInstance(initialParametersInstances);
         }
 
-        return instantiateComponent(findCandidateComponent(definition.getComponentClass()));
+        return getComponent(definition.getComponentClass());
     }
 
     private ComponentDefinition findCandidateComponent(Class<?> clazz) {
@@ -107,12 +111,6 @@ public class ComponentRegistry {
 
         return probableCandidates.stream().filter(candidate -> candidate.getMetadata().isPrimary()).findFirst()
                 .orElse(probableCandidates.get(0));
-    }
-
-    private Object createEmptyInstance(Class<?> componentClass) throws Exception {
-        Constructor<?> constructor = componentClass.getDeclaredConstructor();
-        constructor.setAccessible(true);
-        return constructor.newInstance();
     }
 
     private void injectFieldDependencies(Object component, ComponentDefinition definition) throws Exception {

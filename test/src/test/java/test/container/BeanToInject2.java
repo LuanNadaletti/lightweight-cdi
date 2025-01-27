@@ -2,8 +2,10 @@ package test.container;
 
 import com.nadaletti.impl.annotation.Component;
 import com.nadaletti.impl.annotation.Inject;
+import com.nadaletti.impl.annotation.Singleton;
 
 @Component
+@Singleton
 public class BeanToInject2 implements Bean {
 
     @Inject
